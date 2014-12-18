@@ -16,20 +16,19 @@ namespace Cqrs.Rest
                 { HttpMethod.Delete, typeof(DeleteMethodStrategy) }
             };
 
-        private readonly IUnityContainer _container;
-
-        public RestServiceHandler(IUnityContainer container)
-        {
-            _container = container;
-        }
 
         public HttpResponseMessage Handle(HttpRequestMessage request, ICommandRequest command)
         {
+            var a = new Func<Type, HttpRequestMessage, ICommandRequest, IRestfulStrategy>((t, r, c) =>
+            {
+                return Activator.CreateInstance(t, c, r) as IRestfulStrategy;
+            });
 
+            var strategy = a.Invoke(Strategies[request.Method], request, command);
 
-            var strategy = _container.Resolve(Strategies[request.Method],
-                new ParameterOverride("command", command),
-                new ParameterOverride("request", request)) as IRestfulStrategy;
+            //var strategy = _container.Resolve(Strategies[request.Method],
+            //    new ParameterOverride("command", command),
+            //    new ParameterOverride("request", request)) as IRestfulStrategy;
 
             return Handle(strategy);
         }
@@ -41,9 +40,16 @@ namespace Cqrs.Rest
 
         public HttpResponseMessage Handle<T>(HttpRequestMessage request, ICommandRequest<T> command)
         {
-            var strategy = _container.Resolve(Strategies[request.Method].MakeGenericType(typeof(T)),
-                new ParameterOverride("command", command),
-                new ParameterOverride("request", request)) as IRestfulStrategy;
+            var a = new Func<Type, HttpRequestMessage, ICommandRequest<T>, IRestfulStrategy>((t, r, c) =>
+            {
+                return Activator.CreateInstance(t, c, r) as IRestfulStrategy;
+            });
+
+            var strategy = a.Invoke(Strategies[request.Method].MakeGenericType(typeof(T)), request, command);
+
+            //var strategy = _container.Resolve(Strategies[request.Method].MakeGenericType(typeof(T)),
+            //    new ParameterOverride("command", command),
+            //    new ParameterOverride("request", request)) as IRestfulStrategy;
             //strategy.Comamnd = command;
 
             return Handle(strategy);

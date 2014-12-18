@@ -56,15 +56,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiControllerBase.cs" />
-    <Compile Include="ICrudApiController.cs" />
+    <Compile Include="CqrsRestApiController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestApiSupportExtension.cs" />
-    <Compile Include="Strategy\DeleteMethodStrategy.cs" />
+    <Compile Include="Strategy\Impl\DeleteMethodStrategy.cs" />
     <Compile Include="Strategy\BaseHttpMethodStraetgy.cs" />
     <Compile Include="Strategy\IRestfulStrategy.cs" />
-    <Compile Include="Strategy\PostMethodStrategy.cs" />
-    <Compile Include="Strategy\PutMethodStrategy.cs" />
+    <Compile Include="Strategy\Impl\PostMethodStrategy.cs" />
+    <Compile Include="Strategy\Impl\PutMethodStrategy.cs" />
     <Compile Include="Strategy\RestServiceHandler.cs" />
   </ItemGroup>
   <ItemGroup>

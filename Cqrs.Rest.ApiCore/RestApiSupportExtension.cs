@@ -7,6 +7,9 @@
  *
  */
 
+using System.Net.Http;
+using System.Web.Http;
+
 namespace Cqrs.Rest.Api
 {
     /// <summary>
