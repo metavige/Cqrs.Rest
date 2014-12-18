@@ -1,17 +1,13 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using System.Web.Http;
+﻿using Cqrs.Rest;
+using Microsoft.Practices.ServiceLocation;
 
-namespace Cqrs.Rest
+namespace System.Web.Http
 {
     /// <summary>
     /// ApiController 的基礎類別，目前僅提供部分與專案架構有關的屬性存取 不再提供介面實作
     /// </summary>
-    public abstract class ApiControllerBase : ApiController
+    public abstract class CqrsRestApiController : ApiController
     {
-        //public IProcessCommand CommandProcessor
-        //{
-        //    get { return ServiceLocator.Current.GetInstance<IProcessCommand>(); }
-        //}
         public IProcessQuery QueryProcessor
         {
             get { return ServiceLocator.Current.GetInstance<IProcessQuery>(); }
