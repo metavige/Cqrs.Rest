@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web.Http.Routing;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Cqrs.Rest
 {
@@ -27,8 +28,9 @@ namespace Cqrs.Rest
         //    get { return ServiceLocator.Current.GetInstance<IUnityContainer>(); }
         //}
 
-        [Dependency]
-        public IProcessCommand CommandProcessor { get; set; }
+        public IProcessCommand CommandProcessor {
+            get { return ServiceLocator.Current.GetInstance<IProcessCommand>(); }
+        }
 
         #endregion
 
